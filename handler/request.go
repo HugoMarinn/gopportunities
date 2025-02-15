@@ -9,12 +9,12 @@ func errParamIsRequired(name string, typ string) error {
 // CreateOpening
 
 type CreateOpeningRequest struct {
-	Role string `json:"role"`
-	Company string `json:"company"`
-	Location string `json:"location"`
-	Remote *bool `json:"remote"`
-	Link string `json:"link"`
-	Salary int64 `json:"salary"`
+	Role		string `json:"role"`
+	Company		string `json:"company"`
+	Location	string `json:"location"`
+	Remote 		*bool  `json:"remote"`
+	Link 		string `json:"link"`
+	Salary 		int64  `json:"salary"`
 }
 
 func (r *CreateOpeningRequest) Validate() error {
@@ -40,4 +40,22 @@ func (r *CreateOpeningRequest) Validate() error {
 		return errParamIsRequired("salary", "in64")
 	}
 	return nil
+}
+
+// UpdateOpening
+type UpdateOpeningRequest struct {
+	Role		string `json:"role"`
+	Company		string `json:"company"`
+	Location	string `json:"location"`
+	Remote 		*bool  `json:"remote"`
+	Link 		string `json:"link"`
+	Salary 		int64  `json:"salary"`
+}
+
+func (r *UpdateOpeningRequest) Validate() error {
+	// Se qualquer campo for provido pelo usuario
+	if r.Role != "" || r.Company != "" || r.Location != "" || r.Remote != nil || r.Link != "" || r.Salary > 0 {
+		return nil
+	}
+	return fmt.Errorf("at least one valid field must be provided")
 }
